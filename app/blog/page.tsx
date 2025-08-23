@@ -1,12 +1,77 @@
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
-import { ScrollToTop } from "@/components/scroll-to-top"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Calendar, User, ArrowRight, Search } from "lucide-react"
+"use client";
+
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
+import { ScrollToTop } from "@/components/scroll-to-top";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Calendar, User, Search } from "lucide-react";
 
 export default function BlogPage() {
+  const blogPosts = [
+    {
+      title: "5 Essential Safety Protocols for Construction Sites",
+      excerpt:
+        "Learn about the most important safety measures that every construction site should implement to protect workers and ensure project success.",
+      category: "Safety",
+      author: "Sarah Johnson",
+      date: "January 12, 2024",
+      readTime: "5 min read",
+      image: "/stlion.jpg",
+    },
+    {
+      title: "Sustainable Building Materials: A Complete Guide",
+      excerpt:
+        "Explore eco-friendly construction materials that are revolutionizing the industry while reducing environmental impact.",
+      category: "Sustainability",
+      author: "Mike Davis",
+      date: "January 10, 2024",
+      readTime: "7 min read",
+      image: "/stlion.jpg",
+    },
+    {
+      title: "Project Management Best Practices in Construction",
+      excerpt:
+        "Discover proven strategies for managing construction projects efficiently, from planning to completion.",
+      category: "Project Management",
+      author: "Lisa Brown",
+      date: "January 8, 2024",
+      readTime: "6 min read",
+      image: "/stlion.jpg",
+    },
+    {
+      title: "The Rise of Modular Construction Methods",
+      excerpt:
+        "How modular construction is changing the industry with faster build times and improved quality control.",
+      category: "Innovation",
+      author: "John Smith",
+      date: "January 5, 2024",
+      readTime: "4 min read",
+      image: "/stlion.jpg",
+    },
+    {
+      title: "Understanding Building Codes and Regulations",
+      excerpt:
+        "A comprehensive overview of current building codes and how they impact construction projects.",
+      category: "Regulations",
+      author: "Sarah Johnson",
+      date: "January 3, 2024",
+      readTime: "8 min read",
+      image: "/stlion.jpg",
+    },
+    {
+      title: "Heavy Equipment Maintenance: Tips for Longevity",
+      excerpt:
+        "Essential maintenance practices to keep your construction equipment running efficiently and extend its lifespan.",
+      category: "Equipment",
+      author: "Mike Davis",
+      date: "December 30, 2023",
+      readTime: "5 min read",
+      image: "/stlion.jpg",
+    },
+  ];
+
   return (
     <div className="min-h-screen">
       <Header currentPage="blog" />
@@ -35,10 +100,7 @@ export default function BlogPage() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
             <div className="flex flex-wrap gap-4">
-              <Button
-                variant="default"
-                className="bg-green-500 hover:bg-green-600"
-              >
+              <Button className="bg-green-500 hover:bg-green-600">
                 All Posts
               </Button>
               <Button
@@ -124,7 +186,7 @@ export default function BlogPage() {
                     </div>
                   </div>
                   <Button className="bg-green-500 hover:bg-green-600 w-fit">
-                    Read Full Article <ArrowRight className="ml-2 h-4 w-4" />
+                    Read Full Article
                   </Button>
                 </div>
               </div>
@@ -137,68 +199,7 @@ export default function BlogPage() {
       <section className="py-20 bg-gray-50 dark:bg-gray-800">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "5 Essential Safety Protocols for Construction Sites",
-                excerpt:
-                  "Learn about the most important safety measures that every construction site should implement to protect workers and ensure project success.",
-                category: "Safety",
-                author: "Sarah Johnson",
-                date: "January 12, 2024",
-                readTime: "5 min read",
-                image: "/stlion.jpg",
-              },
-              {
-                title: "Sustainable Building Materials: A Complete Guide",
-                excerpt:
-                  "Explore eco-friendly construction materials that are revolutionizing the industry while reducing environmental impact.",
-                category: "Sustainability",
-                author: "Mike Davis",
-                date: "January 10, 2024",
-                readTime: "7 min read",
-                image: "/stlion.jpg",
-              },
-              {
-                title: "Project Management Best Practices in Construction",
-                excerpt:
-                  "Discover proven strategies for managing construction projects efficiently, from planning to completion.",
-                category: "Project Management",
-                author: "Lisa Brown",
-                date: "January 8, 2024",
-                readTime: "6 min read",
-                image: "/stlion.jpg",
-              },
-              {
-                title: "The Rise of Modular Construction Methods",
-                excerpt:
-                  "How modular construction is changing the industry with faster build times and improved quality control.",
-                category: "Innovation",
-                author: "John Smith",
-                date: "January 5, 2024",
-                readTime: "4 min read",
-                image: "/stlion.jpg",
-              },
-              {
-                title: "Understanding Building Codes and Regulations",
-                excerpt:
-                  "A comprehensive overview of current building codes and how they impact construction projects.",
-                category: "Regulations",
-                author: "Sarah Johnson",
-                date: "January 3, 2024",
-                readTime: "8 min read",
-                image: "/stlion.jpg",
-              },
-              {
-                title: "Heavy Equipment Maintenance: Tips for Longevity",
-                excerpt:
-                  "Essential maintenance practices to keep your construction equipment running efficiently and extend its lifespan.",
-                category: "Equipment",
-                author: "Mike Davis",
-                date: "December 30, 2023",
-                readTime: "5 min read",
-                image: "/stlion.jpg",
-              },
-            ].map((post, index) => (
+            {blogPosts.map((post, index) => (
               <Card
                 key={index}
                 className="group hover:shadow-lg transition-shadow dark:bg-gray-700 dark:border-gray-600"
@@ -206,7 +207,7 @@ export default function BlogPage() {
                 <CardContent className="p-0">
                   <div className="relative overflow-hidden">
                     <img
-                      src={post.image || "/alion.jpg"}
+                      src={post.image}
                       alt={post.title}
                       className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                     />

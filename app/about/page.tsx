@@ -1,20 +1,20 @@
+"use client";
+
 import Image from "next/image";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  CheckCircle,
-  Users,
-  Award,
-  Clock,
-  Target,
-  Eye,
-  Heart,
-} from "lucide-react";
 
 export default function AboutPage() {
+  const teamMembers = [
+    { name: "John Smith", position: "CEO & Founder", image: "/alion.jpg" },
+    { name: "Sarah Johnson", position: "Project Manager", image: "/alion.jpg" },
+    { name: "Mike Davis", position: "Chief Engineer", image: "/stlion.jpg" },
+    { name: "Lisa Brown", position: "Safety Director", image: "/stlion.jpg" },
+  ];
+
   return (
     <div className="min-h-screen transition-colors">
       <Header currentPage="about" />
@@ -49,8 +49,7 @@ export default function AboutPage() {
                 Our Story
               </Badge>
               <h2 className="text-4xl font-bold mb-6 dark:text-white">
-                15+ Years of
-                <span className="text-green-500"> Excellence</span>
+                15+ Years of <span className="text-green-500">Excellence</span>
               </h2>
               <p className="text-gray-600 mb-6 dark:text-gray-300">
                 Founded in 2009, JB Vision has grown from a small local
@@ -113,28 +112,7 @@ export default function AboutPage() {
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                name: "John Smith",
-                position: "CEO & Founder",
-                image: "/alion.jpg",
-              },
-              {
-                name: "Sarah Johnson",
-                position: "Project Manager",
-                image: "/alion.jpg",
-              },
-              {
-                name: "Mike Davis",
-                position: "Chief Engineer",
-                image: "/stlion.jpg",
-              },
-              {
-                name: "Lisa Brown",
-                position: "Safety Director",
-                image: "/stlion.jpg",
-              },
-            ].map((member, index) => (
+            {teamMembers.map((member, index) => (
               <Card
                 key={index}
                 className="text-center overflow-hidden dark:bg-gray-800 dark:border-gray-700"
