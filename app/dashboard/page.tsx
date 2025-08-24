@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { JSX, useState } from "react";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/scroll-to-top";
@@ -16,8 +16,40 @@ import {
   Settings,
 } from "lucide-react";
 
+// Define prop types
+interface StatCardProps {
+  title: string;
+  value: string;
+  change: string;
+  icon: JSX.Element;
+  color: string;
+}
+
+interface Project {
+  name: string;
+  status: "Completed" | "In Progress" | "Planning" | string;
+  progress: number;
+  deadline: string;
+  budget: string;
+}
+
+interface ProjectCardProps {
+  project: Project;
+}
+
+interface TeamMember {
+  name: string;
+  role: string;
+  status: "Active" | "On Leave" | string;
+  projects: number;
+}
+
+interface TeamMemberCardProps {
+  member: TeamMember;
+}
+
 // Reusable components
-const StatCard = ({ title, value, change, icon, color }: any) => (
+const StatCard = ({ title, value, change, icon, color }: StatCardProps) => (
   <Card className="dark:bg-gray-800 dark:border-gray-700">
     <CardContent className="p-6">
       <div className="flex items-center justify-between">
@@ -34,8 +66,8 @@ const StatCard = ({ title, value, change, icon, color }: any) => (
   </Card>
 );
 
-const ProjectCard = ({ project }: any) => {
-  const getStatusColor = (status: string) => {
+const ProjectCard = ({ project }: ProjectCardProps) => {
+  const getStatusColor = (status: Project["status"]) => {
     switch (status) {
       case "Completed":
         return "bg-green-500";
@@ -96,7 +128,7 @@ const ProjectCard = ({ project }: any) => {
   );
 };
 
-const TeamMemberCard = ({ member }: any) => (
+const TeamMemberCard = ({ member }: TeamMemberCardProps) => (
   <Card className="dark:bg-gray-800 dark:border-gray-700">
     <CardContent className="p-6 text-center">
       <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -121,9 +153,11 @@ const TeamMemberCard = ({ member }: any) => (
 );
 
 export default function DashboardPage() {
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState<
+    "overview" | "projects" | "team" | "reports"
+  >("overview");
 
-  const stats = [
+  const stats: StatCardProps[] = [
     {
       title: "Total Projects",
       value: "124",
@@ -154,7 +188,7 @@ export default function DashboardPage() {
     },
   ];
 
-  const recentProjects = [
+  const recentProjects: Project[] = [
     {
       name: "Highway Bridge Construction",
       status: "In Progress",
@@ -185,7 +219,7 @@ export default function DashboardPage() {
     },
   ];
 
-  const teamMembers = [
+  const teamMembers: TeamMember[] = [
     {
       name: "John Smith",
       role: "Project Manager",
@@ -228,22 +262,17 @@ export default function DashboardPage() {
         {/* Navigation Tabs */}
         <div className="mb-8">
           <div className="flex space-x-4 border-b border-gray-200 dark:border-gray-700">
-            {[
-              { id: "overview", label: "Overview" },
-              { id: "projects", label: "Projects" },
-              { id: "team", label: "Team" },
-              { id: "reports", label: "Reports" },
-            ].map((tab) => (
+            {["overview", "projects", "team", "reports"].map((tab) => (
               <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                key={tab}
+                onClick={() => setActiveTab(tab as any)}
                 className={`px-4 py-2 font-medium transition-colors ${
-                  activeTab === tab.id
+                  activeTab === tab
                     ? "text-green-500 border-b-2 border-green-500"
                     : "text-gray-600 hover:text-green-500 dark:text-gray-300"
                 }`}
               >
-                {tab.label}
+                {tab.charAt(0).toUpperCase() + tab.slice(1)}
               </button>
             ))}
           </div>
@@ -337,9 +366,8 @@ export default function DashboardPage() {
             <h2 className="text-2xl font-bold dark:text-white">
               Reports & Analytics
             </h2>
-            {/* Project Performance & Financial Summary cards */}
             <div className="grid lg:grid-cols-2 gap-8">
-              {/* ... same as before ... */}
+              {/* Placeholder for report cards */}
             </div>
           </div>
         )}

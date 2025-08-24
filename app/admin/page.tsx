@@ -5,21 +5,17 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent } from "@/components/ui/card";
 import {
-  Settings,
+  FileText,
   Users,
   ImageIcon,
-  FileText,
   BarChart3,
+  Settings,
   Plus,
   Edit,
   Trash2,
-  Upload,
-  Save,
 } from "lucide-react";
 
 export default function AdminPage() {
@@ -49,57 +45,6 @@ export default function AdminPage() {
       content: "Professional road construction and maintenance...",
       status: "Draft",
       lastModified: "2024-01-13",
-    },
-  ];
-
-  const imageGallery = [
-    {
-      id: 1,
-      name: "hero-construction.jpg",
-      category: "Hero",
-      size: "2.4 MB",
-      uploadDate: "2024-01-15",
-    },
-    {
-      id: 2,
-      name: "bridge-project.jpg",
-      category: "Projects",
-      size: "1.8 MB",
-      uploadDate: "2024-01-14",
-    },
-    {
-      id: 3,
-      name: "team-photo.jpg",
-      category: "Team",
-      size: "3.1 MB",
-      uploadDate: "2024-01-13",
-    },
-  ];
-
-  const users = [
-    {
-      id: 1,
-      name: "John Admin",
-      email: "admin@jbvision.com",
-      role: "Super Admin",
-      status: "Active",
-      lastLogin: "2024-01-15",
-    },
-    {
-      id: 2,
-      name: "Sarah Manager",
-      email: "sarah@jbvision.com",
-      role: "Content Manager",
-      status: "Active",
-      lastLogin: "2024-01-14",
-    },
-    {
-      id: 3,
-      name: "Mike Editor",
-      email: "mike@jbvision.com",
-      role: "Editor",
-      status: "Inactive",
-      lastLogin: "2024-01-10",
     },
   ];
 
@@ -227,12 +172,6 @@ export default function AdminPage() {
             </div>
           </div>
         )}
-
-        {/* Placeholder to use Upload and Save icons */}
-        <div className="hidden">
-          <Upload />
-          <Save />
-        </div>
       </div>
 
       <Footer />

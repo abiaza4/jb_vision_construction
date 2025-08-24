@@ -1,6 +1,5 @@
 "use client";
 
-import type React from "react";
 import { useState } from "react";
 import Image from "next/image";
 import { Header } from "@/components/header";
@@ -9,7 +8,7 @@ import { ScrollToTop } from "@/components/scroll-to-top";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
+import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -37,11 +36,10 @@ export default function ContactPage() {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
     setTimeout(() => {
       setIsSubmitting(false);
       setSubmitMessage(
@@ -132,7 +130,7 @@ export default function ContactPage() {
               >
                 <CardContent className="p-0">
                   <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 dark:bg-green-900">
-                    <div className="text-green-500">{contact.icon}</div>
+                    {contact.icon}
                   </div>
                   <h3 className="text-xl font-semibold mb-2 dark:text-white">
                     {contact.title}
@@ -171,75 +169,93 @@ export default function ContactPage() {
               )}
 
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Form fields remain unchanged */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <input
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    placeholder="First Name"
+                    required
+                    className="p-3 border rounded-lg w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  />
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    placeholder="Last Name"
+                    required
+                    className="p-3 border rounded-lg w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  />
+                </div>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="Email"
+                  required
+                  className="p-3 border rounded-lg w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                />
+                <input
+                  type="text"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  placeholder="Phone"
+                  className="p-3 border rounded-lg w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                />
+                <input
+                  type="text"
+                  name="service"
+                  value={formData.service}
+                  onChange={handleInputChange}
+                  placeholder="Service Required"
+                  className="p-3 border rounded-lg w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                />
+                <input
+                  type="text"
+                  name="budget"
+                  value={formData.budget}
+                  onChange={handleInputChange}
+                  placeholder="Budget"
+                  className="p-3 border rounded-lg w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                />
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  placeholder="Message"
+                  rows={5}
+                  required
+                  className="p-3 border rounded-lg w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                />
+                <Button
+                  type="submit"
+                  className="bg-green-500 hover:bg-green-600 w-full"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Sending..." : "Send Message"}
+                </Button>
               </form>
             </div>
 
-            {/* Map and Additional Info */}
-            <div>
-              <h3 className="text-3xl font-bold mb-6 dark:text-white">
-                Visit Our Office
-              </h3>
-              <p className="text-gray-600 mb-8 dark:text-gray-300">
-                Stop by our office to discuss your project in person. Our team
-                is ready to help you bring your construction vision to life.
-              </p>
-
-              {/* Map */}
-              <div className="h-80 rounded-lg mb-8 overflow-hidden shadow-lg">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15952.463087275142!2d31.5824737!3d4.8512215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1712939b3f3ed1d1%3A0x78d6f61d97cf03cf!2sJuba%2C%20South%20Sudan!5e0!3m2!1sen!2srw!4v1692457640000!5m2!1sen!2srw"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
-              </div>
-
-              {/* Office Hours */}
-              <Card className="p-6 dark:bg-gray-800 dark:border-gray-700">
-                <CardContent className="p-0">
-                  <h4 className="text-xl font-semibold mb-4 dark:text-white">
-                    Office Hours
-                  </h4>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="dark:text-gray-300">
-                        Monday - Friday
-                      </span>
-                      <span className="font-medium dark:text-gray-200">
-                        8:00 AM - 6:00 PM
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="dark:text-gray-300">Saturday</span>
-                      <span className="font-medium dark:text-gray-200">
-                        9:00 AM - 4:00 PM
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="dark:text-gray-300">Sunday</span>
-                      <span className="font-medium dark:text-gray-200">
-                        Closed
-                      </span>
-                    </div>
-                  </div>
-                  <div className="mt-6 p-4 bg-green-50 rounded-lg dark:bg-green-900/20">
-                    <p className="text-sm text-green-800 dark:text-green-300">
-                      <strong>Emergency Services:</strong> Available 24/7 for
-                      urgent construction and infrastructure repairs.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
+            {/* Map */}
+            <div className="h-80 rounded-lg overflow-hidden shadow-lg">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15952.463087275142!2d31.5824737!3d4.8512215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1712939b3f3ed1d1%3A0x78d6f61d97cf03cf!2sJuba%2C%20South%20Sudan!5e0!3m2!1sen!2srw!4v1692457640000!5m2!1sen!2srw"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
             </div>
           </div>
         </div>
       </section>
-
-      {/* FAQ and CTA sections remain unchanged */}
 
       <Footer />
       <ScrollToTop />
