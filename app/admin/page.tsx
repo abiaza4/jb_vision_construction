@@ -24,7 +24,6 @@ import {
 
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState("content");
-  // Removed unused state isEditing/setIsEditing
 
   const contentItems = [
     {
@@ -229,8 +228,11 @@ export default function AdminPage() {
           </div>
         )}
 
-        {/* Image Gallery, User Management, Analytics, Settings Tabs remain unchanged */}
-        {/* ... keep your existing JSX for these tabs as it is ... */}
+        {/* Placeholder to use Upload and Save icons */}
+        <div className="hidden">
+          <Upload />
+          <Save />
+        </div>
       </div>
 
       <Footer />

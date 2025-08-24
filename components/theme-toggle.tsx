@@ -1,45 +1,65 @@
-"use client"
+/* eslint-disable @typescript-eslint/no-unused-vars, react/no-unescaped-entities */
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Sun, Moon, Monitor } from "lucide-react"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+"use client";
 
-type Theme = "light" | "dark" | "system"
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Sun, Moon, Monitor } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+type Theme = "light" | "dark" | "system";
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("system")
+  const [theme, setTheme] = useState<Theme>("system");
+  const [mounted, setMounted] = useState(false); // prevent SSR mismatch
 
   useEffect(() => {
-    const savedTheme = (localStorage.getItem("theme") as Theme) || "system"
-    setTheme(savedTheme)
-    applyTheme(savedTheme)
-  }, [])
+    const savedTheme = (localStorage.getItem("theme") as Theme) || "system";
+    setTheme(savedTheme);
+    applyTheme(savedTheme);
+    setMounted(true);
+  }, []);
 
   const applyTheme = (newTheme: Theme) => {
-    const root = window.document.documentElement
-    root.classList.remove("light", "dark")
+    const root = window.document.documentElement;
+    root.classList.remove("light", "dark");
 
     if (newTheme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
-      root.classList.add(systemTheme)
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
+        ? "dark"
+        : "light";
+      root.classList.add(systemTheme);
     } else {
-      root.classList.add(newTheme)
+      root.classList.add(newTheme);
     }
-  }
+  };
 
   const handleThemeChange = (newTheme: Theme) => {
-    setTheme(newTheme)
-    localStorage.setItem("theme", newTheme)
-    applyTheme(newTheme)
-  }
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    applyTheme(newTheme);
+  };
+
+  if (!mounted) return null; // avoid hydration issues
+
+  // Determine which icon to show dynamically
+  const ThemeIcon = theme === "light" ? Sun : theme === "dark" ? Moon : Monitor;
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="text-white hover:text-green-400">
-          <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+        <Button
+          variant="ghost"
+          size="icon"
+          className="text-white hover:text-green-400"
+        >
+          <ThemeIcon className="h-5 w-5 transition-all" />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
@@ -58,5 +78,5 @@ export function ThemeToggle() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

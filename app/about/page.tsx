@@ -6,6 +6,15 @@ import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  CheckCircle,
+  Users,
+  Award,
+  Clock,
+  Target,
+  Eye,
+  Heart,
+} from "lucide-react";
 
 export default function AboutPage() {
   const teamMembers = [
@@ -51,22 +60,20 @@ export default function AboutPage() {
               <h2 className="text-4xl font-bold mb-6 dark:text-white">
                 15+ Years of <span className="text-green-500">Excellence</span>
               </h2>
-              <p className="text-gray-600 mb-6 dark:text-gray-300">
-                Founded in 2009, JB Vision has grown from a small local
-                construction company to a leading provider of comprehensive
-                construction and infrastructure services. Our journey began with
-                a simple mission: to deliver quality construction projects that
-                stand the test of time.
+              <p className="text-gray-600 mb-6 dark:text-gray-300 flex items-center gap-2">
+                <CheckCircle className="text-green-500 w-6 h-6" /> Founded in
+                2009, JB Vision has grown from a small local construction
+                company to a leading provider of comprehensive construction and
+                infrastructure services.
               </p>
-              <p className="text-gray-600 mb-8 dark:text-gray-300">
-                Over the years, we have successfully completed over 100
-                projects, ranging from residential buildings to major
-                infrastructure developments. Our commitment to excellence,
-                safety, and customer satisfaction has earned us the trust of
-                clients across the region.
+              <p className="text-gray-600 mb-8 dark:text-gray-300 flex items-center gap-2">
+                <Award className="text-green-500 w-6 h-6" /> Successfully
+                completed over 100 projects, from residential buildings to major
+                infrastructure developments.
               </p>
               <div className="grid grid-cols-2 gap-6">
-                <div className="text-center">
+                <div className="text-center flex flex-col items-center">
+                  <Users className="w-8 h-8 text-green-500 mb-2" />
                   <div className="text-3xl font-bold text-green-500 mb-2">
                     100+
                   </div>
@@ -74,7 +81,8 @@ export default function AboutPage() {
                     Projects Completed
                   </div>
                 </div>
-                <div className="text-center">
+                <div className="text-center flex flex-col items-center">
+                  <Heart className="w-8 h-8 text-green-500 mb-2" />
                   <div className="text-3xl font-bold text-green-500 mb-2">
                     50+
                   </div>
@@ -106,9 +114,10 @@ export default function AboutPage() {
             <h2 className="text-4xl font-bold mb-4 dark:text-white">
               Meet Our <span className="text-green-500">Experts</span>
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto dark:text-gray-300">
-              Our experienced team of professionals brings decades of combined
-              expertise to every project
+            <p className="text-gray-600 max-w-2xl mx-auto dark:text-gray-300 flex items-center justify-center gap-2">
+              <Target className="w-5 h-5 text-green-500" /> Our experienced team
+              of professionals brings decades of combined expertise to every
+              project
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -125,12 +134,12 @@ export default function AboutPage() {
                     height={300}
                     className="w-full h-64 object-cover"
                   />
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold mb-2 dark:text-white">
-                      {member.name}
+                  <div className="p-6 flex flex-col items-center gap-2">
+                    <h3 className="text-xl font-semibold mb-2 dark:text-white flex items-center gap-1">
+                      <Clock className="w-5 h-5 text-green-500" /> {member.name}
                     </h3>
-                    <p className="text-green-500 font-medium">
-                      {member.position}
+                    <p className="text-green-500 font-medium flex items-center gap-1">
+                      <Eye className="w-4 h-4" /> {member.position}
                     </p>
                   </div>
                 </CardContent>

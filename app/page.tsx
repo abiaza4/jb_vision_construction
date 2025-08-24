@@ -1,19 +1,22 @@
-import { ImageSlider } from "@/components/image-slider"
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
-import { ScrollToTop } from "@/components/scroll-to-top"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Phone, Mail, MapPin, CheckCircle } from "lucide-react"
-import Link from "next/link"
+"use client";
+
+import { ImageSlider } from "@/components/image-slider";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
+import { ScrollToTop } from "@/components/scroll-to-top";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Phone, Mail, MapPin, CheckCircle } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
       <Header currentPage="home" />
 
-      {/* Hero Section with Slider */}
+      {/* Hero Slider */}
       <section className="relative">
         <ImageSlider />
       </section>
@@ -62,30 +65,17 @@ export default function HomePage() {
                 clients across the region.
               </p>
               <div className="space-y-4 mb-8">
-                <div className="flex items-center gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-500" />
-                  <span className="dark:text-gray-300">
-                    Quality construction materials and equipment
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-500" />
-                  <span className="dark:text-gray-300">
-                    Experienced and certified professionals
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-500" />
-                  <span className="dark:text-gray-300">
-                    Timely project completion
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-500" />
-                  <span className="dark:text-gray-300">
-                    24/7 customer support
-                  </span>
-                </div>
+                {[
+                  "Quality construction materials and equipment",
+                  "Experienced and certified professionals",
+                  "Timely project completion",
+                  "24/7 customer support",
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                    <CheckCircle className="h-5 w-5 text-green-500" />
+                    <span className="dark:text-gray-300">{item}</span>
+                  </div>
+                ))}
               </div>
               <Link href="/about">
                 <Button className="bg-green-500 hover:bg-green-600">
@@ -93,11 +83,12 @@ export default function HomePage() {
                 </Button>
               </Link>
             </div>
-            <div className="relative">
-              <img
+            <div className="relative h-96 md:h-[400px] w-full">
+              <Image
                 src="/stlion.jpg"
                 alt="Construction team"
-                className="rounded-lg object-cover w-full h-96"
+                fill
+                className="rounded-lg object-cover"
               />
             </div>
           </div>
@@ -125,22 +116,19 @@ export default function HomePage() {
                 title: "Road Construction",
                 description:
                   "Professional road construction and maintenance services with modern equipment and techniques.",
-                image:
-                  "/alion.jpg",
+                image: "/alion.jpg",
               },
               {
                 title: "Building Construction",
                 description:
                   "Complete building construction services from foundation to finishing with quality materials.",
-                image:
-                  "/alion.jpg",
+                image: "/alion.jpg",
               },
               {
                 title: "Bridge Construction",
                 description:
                   "Specialized bridge construction and infrastructure development for transportation networks.",
-                image:
-                  "/alion.jpg",
+                image: "/alion.jpg",
               },
             ].map((service, index) => (
               <Card
@@ -148,11 +136,12 @@ export default function HomePage() {
                 className="group hover:shadow-lg transition-shadow dark:bg-gray-800 dark:border-gray-700"
               >
                 <CardContent className="p-0">
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={service.image || "/alion.jpg"}
+                  <div className="relative overflow-hidden h-48">
+                    <Image
+                      src={service.image}
                       alt={service.title}
-                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors" />
                   </div>
@@ -241,7 +230,7 @@ export default function HomePage() {
                   placeholder="Project Details"
                   rows={4}
                   className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:border-green-500 focus:outline-none dark:bg-gray-600"
-                ></textarea>
+                />
                 <Button className="w-full bg-green-500 hover:bg-green-600">
                   Send Message
                 </Button>

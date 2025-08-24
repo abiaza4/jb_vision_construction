@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/scroll-to-top";
@@ -78,11 +79,15 @@ export default function BlogPage() {
 
       {/* Hero Section */}
       <section className="relative h-[400px] bg-gradient-to-r from-black/70 to-black/50">
-        <img
-          src="/alion.jpg"
-          alt="Blog hero"
-          className="absolute inset-0 w-full h-full object-cover -z-10"
-        />
+        <div className="absolute inset-0 -z-10">
+          <Image
+            src="/alion.jpg"
+            alt="Blog hero"
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
         <div className="container mx-auto px-4 h-full flex items-center">
           <div className="text-white">
             <h1 className="text-5xl font-bold mb-4">
@@ -156,10 +161,11 @@ export default function BlogPage() {
             <CardContent className="p-0">
               <div className="grid lg:grid-cols-2 gap-0">
                 <div className="relative h-80 lg:h-auto">
-                  <img
+                  <Image
                     src="/alion.jpg"
                     alt="Featured article"
-                    className="absolute inset-0 w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
                 </div>
                 <div className="p-8 lg:p-12 flex flex-col justify-center">
@@ -205,11 +211,12 @@ export default function BlogPage() {
                 className="group hover:shadow-lg transition-shadow dark:bg-gray-700 dark:border-gray-600"
               >
                 <CardContent className="p-0">
-                  <div className="relative overflow-hidden">
-                    <img
+                  <div className="relative overflow-hidden h-48">
+                    <Image
                       src={post.image}
                       alt={post.title}
-                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <Badge className="absolute top-4 left-4 bg-green-500 text-white">
                       {post.category}

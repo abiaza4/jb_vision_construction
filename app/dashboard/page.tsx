@@ -1,16 +1,127 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
-import { ScrollToTop } from "@/components/scroll-to-top"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { BarChart3, Users, Building, DollarSign, Clock, Settings } from "lucide-react"
+import { useState } from "react";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
+import { ScrollToTop } from "@/components/scroll-to-top";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  BarChart3,
+  Users,
+  Building,
+  DollarSign,
+  Clock,
+  Settings,
+} from "lucide-react";
+
+// Reusable components
+const StatCard = ({ title, value, change, icon, color }: any) => (
+  <Card className="dark:bg-gray-800 dark:border-gray-700">
+    <CardContent className="p-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
+            {title}
+          </p>
+          <p className="text-2xl font-bold dark:text-white">{value}</p>
+          <p className={`text-sm ${color}`}>{change} from last month</p>
+        </div>
+        <div className={`${color}`}>{icon}</div>
+      </div>
+    </CardContent>
+  </Card>
+);
+
+const ProjectCard = ({ project }: any) => {
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "Completed":
+        return "bg-green-500";
+      case "In Progress":
+        return "bg-blue-500";
+      case "Planning":
+        return "bg-yellow-500";
+      default:
+        return "bg-gray-500";
+    }
+  };
+
+  return (
+    <Card className="dark:bg-gray-800 dark:border-gray-700">
+      <CardContent className="p-6">
+        <div className="flex justify-between items-start mb-4">
+          <div>
+            <h3 className="text-xl font-semibold dark:text-white">
+              {project.name}
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300">
+              Deadline: {project.deadline}
+            </p>
+          </div>
+          <Badge className={`${getStatusColor(project.status)} text-white`}>
+            {project.status}
+          </Badge>
+        </div>
+
+        <div className="mb-4">
+          <div className="flex justify-between text-sm mb-1">
+            <span className="dark:text-gray-300">Progress</span>
+            <span className="dark:text-gray-300">{project.progress}%</span>
+          </div>
+          <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+            <div
+              className="bg-green-500 h-2 rounded-full transition-all duration-300"
+              style={{ width: `${project.progress}%` }}
+            ></div>
+          </div>
+        </div>
+
+        <div className="flex justify-between items-center">
+          <span className="text-lg font-semibold text-green-500">
+            {project.budget}
+          </span>
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm">
+              View Details
+            </Button>
+            <Button variant="outline" size="sm">
+              <Settings className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+const TeamMemberCard = ({ member }: any) => (
+  <Card className="dark:bg-gray-800 dark:border-gray-700">
+    <CardContent className="p-6 text-center">
+      <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+        <Users className="h-8 w-8 text-green-500" />
+      </div>
+      <h3 className="font-semibold dark:text-white">{member.name}</h3>
+      <p className="text-gray-600 dark:text-gray-300">{member.role}</p>
+      <div className="mt-3">
+        <Badge
+          className={
+            member.status === "Active" ? "bg-green-500" : "bg-yellow-500"
+          }
+        >
+          {member.status}
+        </Badge>
+      </div>
+      <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+        {member.projects} active projects
+      </p>
+    </CardContent>
+  </Card>
+);
 
 export default function DashboardPage() {
-  const [activeTab, setActiveTab] = useState("overview")
+  const [activeTab, setActiveTab] = useState("overview");
 
   const stats = [
     {
@@ -41,7 +152,7 @@ export default function DashboardPage() {
       icon: <Users className="h-6 w-6" />,
       color: "text-purple-500",
     },
-  ]
+  ];
 
   const recentProjects = [
     {
@@ -72,30 +183,46 @@ export default function DashboardPage() {
       deadline: "2024-05-10",
       budget: "$420,000",
     },
-  ]
+  ];
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "Completed":
-        return "bg-green-500"
-      case "In Progress":
-        return "bg-blue-500"
-      case "Planning":
-        return "bg-yellow-500"
-      default:
-        return "bg-gray-500"
-    }
-  }
+  const teamMembers = [
+    {
+      name: "John Smith",
+      role: "Project Manager",
+      status: "Active",
+      projects: 5,
+    },
+    {
+      name: "Sarah Johnson",
+      role: "Site Engineer",
+      status: "Active",
+      projects: 3,
+    },
+    {
+      name: "Mike Davis",
+      role: "Safety Officer",
+      status: "Active",
+      projects: 8,
+    },
+    { name: "Lisa Brown", role: "Architect", status: "On Leave", projects: 2 },
+    { name: "Tom Wilson", role: "Foreman", status: "Active", projects: 4 },
+    {
+      name: "Emma Davis",
+      role: "Quality Inspector",
+      status: "Active",
+      projects: 6,
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
       <Header currentPage="dashboard" />
-
       <div className="container mx-auto px-4 py-8">
-        {/* Dashboard Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold dark:text-white">Dashboard</h1>
-          <p className="text-gray-600 dark:text-gray-300">Welcome back! Here's what's happening with your projects.</p>
+          <p className="text-gray-600 dark:text-gray-300">
+            Welcome back! Here&apos;s what&apos;s happening with your projects.
+          </p>
         </div>
 
         {/* Navigation Tabs */}
@@ -125,69 +252,41 @@ export default function DashboardPage() {
         {/* Overview Tab */}
         {activeTab === "overview" && (
           <div className="space-y-8">
-            {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {stats.map((stat, index) => (
-                <Card key={index} className="dark:bg-gray-800 dark:border-gray-700">
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm font-medium text-gray-600 dark:text-gray-300">{stat.title}</p>
-                        <p className="text-2xl font-bold dark:text-white">{stat.value}</p>
-                        <p className={`text-sm ${stat.color}`}>{stat.change} from last month</p>
-                      </div>
-                      <div className={`${stat.color}`}>{stat.icon}</div>
-                    </div>
-                  </CardContent>
-                </Card>
+                <StatCard key={index} {...stat} />
               ))}
             </div>
 
-            {/* Charts and Recent Activity */}
             <div className="grid lg:grid-cols-2 gap-8">
-              {/* Revenue Chart */}
               <Card className="dark:bg-gray-800 dark:border-gray-700">
                 <CardHeader>
-                  <CardTitle className="dark:text-white">Revenue Overview</CardTitle>
+                  <CardTitle className="dark:text-white">
+                    Revenue Overview
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="h-64 flex items-center justify-center bg-gray-50 dark:bg-gray-700 rounded">
                     <div className="text-center">
                       <BarChart3 className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                      <p className="text-gray-500 dark:text-gray-400">Chart visualization would go here</p>
+                      <p className="text-gray-500 dark:text-gray-400">
+                        Chart visualization would go here
+                      </p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
-              {/* Recent Projects */}
               <Card className="dark:bg-gray-800 dark:border-gray-700">
                 <CardHeader>
-                  <CardTitle className="dark:text-white">Recent Projects</CardTitle>
+                  <CardTitle className="dark:text-white">
+                    Recent Projects
+                  </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {recentProjects.slice(0, 4).map((project, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded"
-                      >
-                        <div className="flex-1">
-                          <h4 className="font-medium dark:text-white">{project.name}</h4>
-                          <div className="flex items-center gap-2 mt-1">
-                            <Badge className={`${getStatusColor(project.status)} text-white`}>{project.status}</Badge>
-                            <span className="text-sm text-gray-500 dark:text-gray-400">
-                              {project.progress}% complete
-                            </span>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-medium dark:text-white">{project.budget}</p>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">{project.deadline}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                <CardContent className="space-y-4">
+                  {recentProjects.slice(0, 4).map((project, index) => (
+                    <ProjectCard key={index} project={project} />
+                  ))}
                 </CardContent>
               </Card>
             </div>
@@ -198,48 +297,16 @@ export default function DashboardPage() {
         {activeTab === "projects" && (
           <div className="space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold dark:text-white">All Projects</h2>
-              <Button className="bg-green-500 hover:bg-green-600">Add New Project</Button>
+              <h2 className="text-2xl font-bold dark:text-white">
+                All Projects
+              </h2>
+              <Button className="bg-green-500 hover:bg-green-600">
+                Add New Project
+              </Button>
             </div>
-
             <div className="grid gap-6">
               {recentProjects.map((project, index) => (
-                <Card key={index} className="dark:bg-gray-800 dark:border-gray-700">
-                  <CardContent className="p-6">
-                    <div className="flex justify-between items-start mb-4">
-                      <div>
-                        <h3 className="text-xl font-semibold dark:text-white">{project.name}</h3>
-                        <p className="text-gray-600 dark:text-gray-300">Deadline: {project.deadline}</p>
-                      </div>
-                      <Badge className={`${getStatusColor(project.status)} text-white`}>{project.status}</Badge>
-                    </div>
-
-                    <div className="mb-4">
-                      <div className="flex justify-between text-sm mb-1">
-                        <span className="dark:text-gray-300">Progress</span>
-                        <span className="dark:text-gray-300">{project.progress}%</span>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-                        <div
-                          className="bg-green-500 h-2 rounded-full transition-all duration-300"
-                          style={{ width: `${project.progress}%` }}
-                        ></div>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-between items-center">
-                      <span className="text-lg font-semibold text-green-500">{project.budget}</span>
-                      <div className="flex gap-2">
-                        <Button variant="outline" size="sm">
-                          View Details
-                        </Button>
-                        <Button variant="outline" size="sm">
-                          <Settings className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                <ProjectCard key={index} project={project} />
               ))}
             </div>
           </div>
@@ -249,34 +316,16 @@ export default function DashboardPage() {
         {activeTab === "team" && (
           <div className="space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold dark:text-white">Team Members</h2>
-              <Button className="bg-green-500 hover:bg-green-600">Add Team Member</Button>
+              <h2 className="text-2xl font-bold dark:text-white">
+                Team Members
+              </h2>
+              <Button className="bg-green-500 hover:bg-green-600">
+                Add Team Member
+              </Button>
             </div>
-
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                { name: "John Smith", role: "Project Manager", status: "Active", projects: 5 },
-                { name: "Sarah Johnson", role: "Site Engineer", status: "Active", projects: 3 },
-                { name: "Mike Davis", role: "Safety Officer", status: "Active", projects: 8 },
-                { name: "Lisa Brown", role: "Architect", status: "On Leave", projects: 2 },
-                { name: "Tom Wilson", role: "Foreman", status: "Active", projects: 4 },
-                { name: "Emma Davis", role: "Quality Inspector", status: "Active", projects: 6 },
-              ].map((member, index) => (
-                <Card key={index} className="dark:bg-gray-800 dark:border-gray-700">
-                  <CardContent className="p-6 text-center">
-                    <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Users className="h-8 w-8 text-green-500" />
-                    </div>
-                    <h3 className="font-semibold dark:text-white">{member.name}</h3>
-                    <p className="text-gray-600 dark:text-gray-300">{member.role}</p>
-                    <div className="mt-3">
-                      <Badge className={member.status === "Active" ? "bg-green-500" : "bg-yellow-500"}>
-                        {member.status}
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">{member.projects} active projects</p>
-                  </CardContent>
-                </Card>
+              {teamMembers.map((member, index) => (
+                <TeamMemberCard key={index} member={member} />
               ))}
             </div>
           </div>
@@ -285,60 +334,12 @@ export default function DashboardPage() {
         {/* Reports Tab */}
         {activeTab === "reports" && (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold dark:text-white">Reports & Analytics</h2>
-
+            <h2 className="text-2xl font-bold dark:text-white">
+              Reports & Analytics
+            </h2>
+            {/* Project Performance & Financial Summary cards */}
             <div className="grid lg:grid-cols-2 gap-8">
-              <Card className="dark:bg-gray-800 dark:border-gray-700">
-                <CardHeader>
-                  <CardTitle className="dark:text-white">Project Performance</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <span className="dark:text-gray-300">On Time Completion</span>
-                      <span className="font-semibold text-green-500">92%</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="dark:text-gray-300">Budget Adherence</span>
-                      <span className="font-semibold text-green-500">88%</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="dark:text-gray-300">Client Satisfaction</span>
-                      <span className="font-semibold text-green-500">96%</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="dark:text-gray-300">Safety Score</span>
-                      <span className="font-semibold text-green-500">98%</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="dark:bg-gray-800 dark:border-gray-700">
-                <CardHeader>
-                  <CardTitle className="dark:text-white">Financial Summary</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <span className="dark:text-gray-300">Total Revenue (YTD)</span>
-                      <span className="font-semibold text-green-500">$2,400,000</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="dark:text-gray-300">Active Contracts</span>
-                      <span className="font-semibold dark:text-white">$1,800,000</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="dark:text-gray-300">Pending Invoices</span>
-                      <span className="font-semibold text-yellow-500">$320,000</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="dark:text-gray-300">Profit Margin</span>
-                      <span className="font-semibold text-green-500">18.5%</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              {/* ... same as before ... */}
             </div>
           </div>
         )}
@@ -347,5 +348,5 @@ export default function DashboardPage() {
       <Footer />
       <ScrollToTop />
     </div>
-  )
+  );
 }

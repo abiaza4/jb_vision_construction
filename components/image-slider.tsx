@@ -51,7 +51,6 @@ export function ImageSlider() {
         prevIndex === sliderImages.length - 1 ? 0 : prevIndex + 1
       );
     }, 5000);
-
     return () => clearInterval(timer);
   }, []);
 
@@ -68,7 +67,7 @@ export function ImageSlider() {
   };
 
   return (
-    <div className="relative h-[600px] overflow-hidden">
+    <div className="relative h-[600px] md:h-[500px] overflow-hidden">
       {sliderImages.map((image, index) => (
         <div
           key={index}
@@ -77,7 +76,7 @@ export function ImageSlider() {
           }`}
         >
           <Image
-            src={image.src || "/alion.jpg"}
+            src={image.src}
             alt={image.alt}
             fill
             className="object-cover"
@@ -86,8 +85,10 @@ export function ImageSlider() {
           <div className="absolute inset-0 bg-black/50" />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center text-white max-w-4xl px-4">
-              <h2 className="text-5xl font-bold mb-4">{image.title}</h2>
-              <p className="text-xl mb-8">{image.description}</p>
+              <h2 className="text-3xl md:text-5xl font-bold mb-4">
+                {image.title}
+              </h2>
+              <p className="text-lg md:text-xl mb-8">{image.description}</p>
               <Button className="bg-green-500 hover:bg-green-600">
                 Learn More
               </Button>
@@ -98,17 +99,19 @@ export function ImageSlider() {
 
       {/* Navigation Arrows */}
       <Button
+        aria-label="Previous slide"
         variant="ghost"
         size="icon"
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:bg-white/20"
+        className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 text-white hover:bg-white/20"
         onClick={goToPrevious}
       >
         <ChevronLeft className="h-8 w-8" />
       </Button>
       <Button
+        aria-label="Next slide"
         variant="ghost"
         size="icon"
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:bg-white/20"
+        className="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 text-white hover:bg-white/20"
         onClick={goToNext}
       >
         <ChevronRight className="h-8 w-8" />
