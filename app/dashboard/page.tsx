@@ -16,7 +16,7 @@ import {
   Settings,
 } from "lucide-react";
 
-// Define prop types
+// Types
 interface StatCardProps {
   title: string;
   value: string;
@@ -48,7 +48,7 @@ interface TeamMemberCardProps {
   member: TeamMember;
 }
 
-// Reusable components
+// Reusable Components
 const StatCard = ({ title, value, change, icon, color }: StatCardProps) => (
   <Card className="dark:bg-gray-800 dark:border-gray-700">
     <CardContent className="p-6">
@@ -265,7 +265,11 @@ export default function DashboardPage() {
             {["overview", "projects", "team", "reports"].map((tab) => (
               <button
                 key={tab}
-                onClick={() => setActiveTab(tab as any)}
+                onClick={() =>
+                  setActiveTab(
+                    tab as "overview" | "projects" | "team" | "reports"
+                  )
+                }
                 className={`px-4 py-2 font-medium transition-colors ${
                   activeTab === tab
                     ? "text-green-500 border-b-2 border-green-500"
